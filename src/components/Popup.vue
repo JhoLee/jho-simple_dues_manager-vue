@@ -33,6 +33,7 @@
 
 <script>
 import format from 'date-fns/format';
+import db from '@/firebaseConfig';
 
 export default {
   data() {
@@ -51,6 +52,17 @@ export default {
     submit() {
       if (this.$refs.form.validate()) {
         // console.log(this.title, this.content);
+        const project = {
+          title: this.title,
+          content: this.content,
+          due: format(this.due, 'Do MMM YYY'),
+          person: 'Jho',
+          status: 'ongoing',
+        }
+
+        db.collection('projects').add(project).then(() => {
+          // console.log('added to db');
+        });
       }
     }
   },
